@@ -134,3 +134,7 @@ const onSubmit = ({ formData }) => {
     setData(formData);
 }
 ```
+
+Form Will look like this
+![image](https://user-images.githubusercontent.com/27571455/185586041-c5bacd85-4a67-4c30-8507-fc5d36579ac9.png)
+
