@@ -1,70 +1,136 @@
-# Getting Started with Create React App
+# React JSON Schema Form
+In this project I am using React and JSON Schema Form to create a form that validates the data. The form is created using JSON Schema. The form is then rendered using React JSON Schema Form. 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+First of all, let's install the dependencies.
 
-In the project directory, you can run:
+```bash
+npm install
+```
 
-### `npm start`
+Now we can start the application.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```bash
+npm start
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+# What is React JSON Schema Form?
+React JSON Schema Form is a library that allows you to create forms using JSON Schema. It is a React component that allows you to create forms using JSON Schema. 
 
-### `npm test`
+## Installation
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+npm install @rjsf/core
+```
 
-### `npm run build`
+There are many other packages as well like `react-jsonschema-form` and `react-jsonschema-form-validation-mixin` that you can use to create your form with JSON Schema.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Usage
+First of all we need to import the library.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```jsx
+import Form from "@rjsf/core";
+```
 
-### `npm run eject`
+Now we can use Form to create a form.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```jsx
+<Form schema={schema} uiSchema={uiSchema} formData={formData} onSubmit={onSubmit} />
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+For now I am just using schema, uiSchema and formData, and onSubmit. You can see the documentation for these properties in the [React JSON Schema Form documentation]().
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Now I will explain each property in detail, with an example.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## schema
+The schema property is the JSON Schema that is used to create the form.
 
-## Learn More
+```jsx
+const schema = {
+    title: "Simple Form Taking Personal Information",
+    description: "This is a simple form taking personal information",
+    type: "object",
+    required: ['name', 'age'],
+    properties: {
+        name: {
+            type: "string",
+            title: "Name",
+        },
+        age: {
+            type: "number",
+            title: "Age",
+            description: "Age in years, mimimum value is 16, maximum value is 100",
+            minimum: 16,
+            maximum: 100,
+        },
+        address: {
+            type: "string",
+            title: "Address",
+            description: "Address of the person",
+        },
+        nationality: {
+            type: 'string',
+            title: 'Nationality',
+            enum: ['Pakistani', 'Indian', 'Bandladeshi', 'Other']
+        },
+        dob: {
+            type: "string",
+            title: "Date of birth",
+            format: "date",
+        },
+        education: {
+            type: "array",
+            title: "Education",
+            description: "Education of the person, name of the degree and year of completion",
+            items: {
+                type: "object",
+                properties: {
+                    nameOfDegree: {
+                        type: "string",
+                        title: "Name of the degree",
+                    },
+                    nameOfSchool: {
+                        type: "string",
+                        title: "Name of the school",
+                    },
+                    yearOfCompletion: {
+                        type: "number",
+                        title: "Year of completion",
+                        minimum: 1900,
+                    },
+                },
+            },
+        },
+    },
+};
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## uiSchema
+The uiSchema property is the JSON Schema that is used to create the form.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```jsx
+const uiSchema = {
+    'ui:order': ['name', 'age','dob', 'education', 'nationality', 'address'],
+    address: {
+        "ui:widget": "textarea",
+    },
+};
+```
 
-### Code Splitting
+## formData
+This is use to assign default value to form
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```jsx
+const formData = {
+    nationality: 'Pakistani'
+};
+```
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## onSubmit 
+```jsx
+const onSubmit = ({ formData }) => {
+    console.log("Data submitted: ", formData);
+    setData(formData);
+}
+```
