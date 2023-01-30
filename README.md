@@ -1,5 +1,5 @@
 # React JSON Schema Form
-In this project I am using React and JSON Schema Form to create a form that validates the data. The form is created using JSON Schema. The form is then rendered using React JSON Schema Form. 
+I am using React and JSON Schema Form to create a form that validates the data. The form is created using JSON Schema. The form is then rendered using React JSON Schema Form. 
 
 
 First of all, let's install the dependencies.
